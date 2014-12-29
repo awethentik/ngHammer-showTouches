@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<title>Show Touches</title>
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<style>
+	.lastTouch {
+		display: none;
+		position: fixed;
+		z-index: 9999;
+		height: 24px;
+		width: 24px;
+		top: 0;
+		left: 0;
+		pointer-events: none;
+		background: rgba(255, 0, 0, 0.8);
+		border-radius: 20px;
+		margin-top: -12px;
+		margin-left: -12px;
+	}
+	pre {
+		display: block;
+		width: 100%;
+		overflow: auto;
+		padding: 9.5px;
+		margin: 0 0 10px;
+		font-size: 14px;
+		line-height: 20px;
+		background-color: #f0f0f0;
+		border: 1px solid #cccccc;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	</style>
+</head>
+<body>
+<div hm-touch="showPoint($event)" hm-release="hidePoint()" show-touches>
+	<div style="width:100%;height:700px;">
+		<h1>Show Touches Example</h1>
+		<p>
+			This is using <a href="https://github.com/hammerjs/hammer.js/wiki/Getting-Started" target="_blank">Hammer.js (v1)</a> and <a href="https://github.com/monospaced/angular-hammer" target="_blank">Angular Hammer</a> with <a href="https://angularjs.org/" target="_blank">angularJS</a>.
+		</p>
+		<p>Temporary tech: <a href="http://jquery.com/" target="_blank">jQuery 1.10.2</a></p>
+		<p>
+			A demo mode "hot key" (spacebar + d) has also been included using <a href="http://chieffancypants.github.io/angular-hotkeys/" target="_blank">AngularHotkeys.js</a>.
+		</p>
+		<h2>Inside of index.html</h2>
+		<h4>Add jquery-1.10.2.min.js (before angular)</h4>
+<pre class="prettyprint linenums">
+&lt;script src="js/vendor/jquery-1.10.2.min.js"&gt;&lt;/script&gt;
+</pre>
+		<h4>Add hammer.js (before angular)</h4>
+<pre class="prettyprint linenums">
+&lt;script src="js/vendor/hammer.js"&gt;&lt;/script&gt;
+</pre>
+		<h4>Add ng-hammer.js (after angular)</h4>
+<pre class="prettyprint linenums">
+&lt;script src="js/vendor/angular-hammer.js"&gt;&lt;/script&gt;
+</pre>
+		<h4>Add directive as attribute</h4>
+<pre class="prettyprint linenums">
+&lt;div hm-touch="showLoc($event)" hm-release="hideLoc()" show-touches&gt;
+</pre>
+		<h4>Add CSS (colors, size &amp; opacity can be changed here)</h4>
+<pre class="prettyprint linenums">
+.lastTouch {
+	display: none;
+	position: absolute;
+	z-index: 9999;
+	height: 24px;
+	width: 24px;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	background: rgba(255, 0, 0, 0.8);
+	border-radius: 20px;
+	margin-top: -12px;
+	margin-left: -12px;
+}
+</pre>
+		<h2>Inside of js/directives.js</h2>
+<pre class="prettyprint linenums">
+'use strict';
+
+/* App Module */
+var myApp = angular.module('myApp', ['hmTouchEvents', 'cfp.hotkeys']);
+/* Directives */
+myApp.directive('showTouches', ['hotkeys', function(hotkeys){
+	return {
+		restrict: 'A',
+		link: function(scope, element) {
+			element.append('&lt;div class="lastTouch"&gt;&lt;/div&gt;');
+			scope.showPoint = function(evt){
+				if(scope.demoMode){
+					$('.lastTouch').show().css({
+						'top': evt.gesture.touches[0].clientY,
+						'left': evt.gesture.touches[0].clientX
+					});
+				}
+			};
+			scope.hidePoint = function(){
+				if(scope.demoMode){ $('.lastTouch').fadeOut("slow"); }
+			};
+
+			scope.demoMode = false;
+			hotkeys.add({
+				combo: 'space+d',
+				description: 'Toggle Demo Mode',
+				callback: function() {
+					scope.demoMode = !scope.demoMode;
+				}
+			});
+	   }
+	}
+}]);
+</pre>
+	</div>
+</div>
+<script src="js/vendor/jquery-1.10.2.min.js"></script>
+<script src="js/vendor/hammer.js"></script>
+<script src="js/angular/angular.min.js"></script>
+<script src="js/vendor/angular-hammer.js"></script>
+<script src="js/vendor/hotkeys.min.js"></script>
+<script src="js/directives.js"></script>
+</body>
+</html>
