@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="ngHammer-showTouches : Combines angularJS + hammerJS + ng-hammer + hotkeys">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>ngHammer-showTouches</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/awethentik/ngHammer-showTouches">View on GitHub</a>
+
+          <h1 id="project_title">ngHammer-showTouches</h1>
+          <h2 id="project_tagline">Combines angularJS + hammerJS + ng-hammer + hotkeys</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/awethentik/ngHammer-showTouches/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/awethentik/ngHammer-showTouches/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="nghammer-showtouches" class="anchor" href="#nghammer-showtouches" aria-hidden="true"><span class="octicon octicon-link"></span></a>ngHammer-showTouches</h1>
+
+<p>Combines angularJS + hammerJS + ng-hammer</p>
+
+<p>This is using <a href="https://github.com/hammerjs/hammer.js/wiki/Getting-Started" target="_blank">Hammer.js (v1)</a> and <a href="https://github.com/monospaced/angular-hammer" target="_blank">Angular Hammer</a> with <a href="https://angularjs.org/" target="_blank">angularJS</a>.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Add jquery-1.10.2.min.js (before angular) *temporary</p>
+
+<pre>
+&lt;script src="js/vendor/jquery-1.10.2.min.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>Add hammer.js (before angular)</p>
+
+<pre>
+&lt;script src="js/vendor/hammer.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>Add ng-hammer.js (after angular)</p>
+
+<pre>
+&lt;script src="js/vendor/angular-hammer.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>Add hotkeys.min.js (after angular)</p>
+
+<pre>
+&lt;script src="js/vendor/hotkeys.min.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>Add CSS (colors, size &amp; opacity can be changed here)</p>
+
+<div class="highlight highlight-css"><pre><span class="pl-e">.lastTouch</span> {
+  <span class="pl-mp"><span class="pl-s3">display</span></span>: <span class="pl-sc">none</span>;
+  <span class="pl-mp"><span class="pl-s3">position</span></span>: <span class="pl-sc">fixed</span>;
+  <span class="pl-mp"><span class="pl-s3">z-index</span></span>: <span class="pl-c1">9999</span>;
+  <span class="pl-mp"><span class="pl-s3">height</span></span>: <span class="pl-c1">24<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">width</span></span>: <span class="pl-c1">24<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">top</span></span>: <span class="pl-c1">0</span>;
+  <span class="pl-mp"><span class="pl-s3">left</span></span>: <span class="pl-c1">0</span>;
+  <span class="pl-mp"><span class="pl-s3">pointer-events</span></span>: <span class="pl-sc">none</span>;
+  <span class="pl-mp"><span class="pl-s3">background</span></span>: <span class="pl-s3">rgba</span>(<span class="pl-c1">255, 0, 0, 0.8</span>);
+  <span class="pl-mp"><span class="pl-s3">border-radius</span></span>: <span class="pl-c1">20<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">margin-top</span></span>: <span class="pl-c1">-12<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">margin-left</span></span>: <span class="pl-c1">-12<span class="pl-k">px</span></span>;
+}</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h4>
+<a id="add-directive-as-attribute" class="anchor" href="#add-directive-as-attribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add directive as attribute</h4>
+
+<pre>
+&lt;div hm-touch="showLoc($event)" hm-release="hideLoc()" show-touches&gt;&lt;/div&gt;
+</pre>
+
+<p>Toggle on/off by using "hot key" (spacebar + d).</p>
+
+<h4>
+<a id="directive" class="anchor" href="#directive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directive</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-s1"><span class="pl-pds">'</span>use strict<span class="pl-pds">'</span></span>;
+
+<span class="pl-c">/* App Module */</span>
+<span class="pl-s">var</span> myApp <span class="pl-k">=</span> angular.module(<span class="pl-s1"><span class="pl-pds">'</span>myApp<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>hmTouchEvents<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>cfp.hotkeys<span class="pl-pds">'</span></span>]);
+<span class="pl-c">/* Directives */</span>
+myApp.directive(<span class="pl-s1"><span class="pl-pds">'</span>showTouches<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>hotkeys<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">hotkeys</span>){
+    <span class="pl-k">return</span> {
+        restrict<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>A<span class="pl-pds">'</span></span>,
+        <span class="pl-en">link</span>: <span class="pl-st">function</span>(<span class="pl-vpf">scope</span>, <span class="pl-vpf">element</span>) {
+            element.append(<span class="pl-s1"><span class="pl-pds">'</span>&amp;lt;div class="lastTouch"&amp;gt;&amp;lt;/div&amp;gt;<span class="pl-pds">'</span></span>);
+            <span class="pl-s3">scope</span>.<span class="pl-en">showPoint</span> <span class="pl-k">=</span> <span class="pl-st">function</span>(<span class="pl-vpf">evt</span>){
+                <span class="pl-k">if</span>(scope.demoMode){
+                    $(<span class="pl-s1"><span class="pl-pds">'</span>.lastTouch<span class="pl-pds">'</span></span>).show().css({
+                        <span class="pl-s1"><span class="pl-pds">'</span>top<span class="pl-pds">'</span></span><span class="pl-k">:</span> evt.gesture.touches[<span class="pl-c1">0</span>].clientY,
+                        <span class="pl-s1"><span class="pl-pds">'</span>left<span class="pl-pds">'</span></span><span class="pl-k">:</span> evt.gesture.touches[<span class="pl-c1">0</span>].clientX
+                    });
+                }
+            };
+            <span class="pl-s3">scope</span>.<span class="pl-en">hidePoint</span> <span class="pl-k">=</span> <span class="pl-st">function</span>(){
+                <span class="pl-k">if</span>(scope.demoMode){ $(<span class="pl-s1"><span class="pl-pds">'</span>.lastTouch<span class="pl-pds">'</span></span>).fadeOut(<span class="pl-s1"><span class="pl-pds">"</span>slow<span class="pl-pds">"</span></span>); }
+            };
+
+            scope.demoMode <span class="pl-k">=</span> <span class="pl-c1">false</span>;
+            hotkeys.<span class="pl-s3">add</span>({
+                combo<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>space+d<span class="pl-pds">'</span></span>,
+                description<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>Toggle Demo Mode<span class="pl-pds">'</span></span>,
+                <span class="pl-en">callback</span>: <span class="pl-st">function</span>() {
+                    scope.demoMode <span class="pl-k">=</span> <span class="pl-k">!</span>scope.demoMode;
+                }
+            });
+       }
+    }
+}]);</pre></div>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Todo</h2>
+
+<p>Remove: <a href="http://jquery.com/" target="_blank">jQuery 1.10.2</a></p>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<ul>
+<li><a href="https://github.com/hammerjs/hammer.js/wiki/Getting-Started" target="_blank">Hammer.js (v1)</a></li>
+<li><a href="http://monospaced.github.io/angular-hammer/" target="_blank">Angular Hammer</a></li>
+<li><a href="http://chieffancypants.github.io/angular-hotkeys/" target="_blank">AngularHotkeys.js</a></li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">ngHammer-showTouches maintained by <a href="https://github.com/awethentik">awethentik</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
