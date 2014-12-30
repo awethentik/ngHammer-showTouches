@@ -6,7 +6,7 @@ This is using <a href="https://github.com/hammerjs/hammer.js/wiki/Getting-Starte
 
 ## Installation
 
-Add jquery-1.10.2.min.js (before angular)
+Add jquery-1.10.2.min.js (before angular) *temporary
 <pre class="prettyprint linenums">
 &lt;script src="js/vendor/jquery-1.10.2.min.js"&gt;&lt;/script&gt;
 </pre>
@@ -19,6 +19,11 @@ Add hammer.js (before angular)
 Add ng-hammer.js (after angular)
 <pre class="prettyprint linenums">
 &lt;script src="js/vendor/angular-hammer.js"&gt;&lt;/script&gt;
+</pre>
+
+Add hotkeys.min.js (after angular)
+<pre class="prettyprint linenums">
+&lt;script src="js/vendor/hotkeys.min.js"&gt;&lt;/script&gt;
 </pre>
 
 Add CSS (colors, size &amp; opacity can be changed here)
