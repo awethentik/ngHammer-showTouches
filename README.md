@@ -54,7 +54,7 @@ Add CSS (colors, size &amp; opacity can be changed here)
 
 Toggle on/off by using "hot key" (spacebar + d).
 
-## Angular Directive
+<h4>Directive</h4>
 
 ```javascript
 'use strict';
